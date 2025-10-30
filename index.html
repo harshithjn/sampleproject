@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; will-change: transform, opacity; }
 
     body {
       font-family: "Poppins", sans-serif;
@@ -23,7 +23,6 @@
       text-align: center;
     }
 
-    /* Floating lights */
     .light {
       position: absolute;
       width: 300px;
@@ -42,14 +41,13 @@
       100% { transform: translateY(-40px) translateX(40px); }
     }
 
-    /* Animated balloons */
     .balloon {
       position: absolute;
       width: 40px;
       height: 50px;
       background: linear-gradient(180deg, #ff9a9e, #fad0c4);
       border-radius: 50% 50% 45% 45%;
-      animation: rise 10s linear infinite;
+      animation: rise 12s linear infinite;
       opacity: 0.8;
     }
     .balloon::after {
@@ -68,7 +66,6 @@
       to { transform: translateY(-120px); }
     }
 
-    /* Main card */
     .card {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -134,29 +131,15 @@
       padding: 0 10px;
     }
 
-    .footer {
-      font-size: 0.9rem;
-      color: #aaa;
-    }
-
-    .footer a {
-      color: #ff8db4;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .footer a:hover { color: #fff; }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Floating emojis */
     .emoji {
       position: absolute;
       font-size: 2rem;
-      animation: floatEmoji 8s infinite linear;
+      animation: floatEmoji 10s linear infinite;
       opacity: 0.8;
     }
 
@@ -165,7 +148,6 @@
       to { transform: translateY(-10vh); }
     }
 
-    /* Aura pulse */
     .aura {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -187,7 +169,7 @@
   <div class="aura"></div>
 
   <div class="card" id="tilt-card">
-    <h1>🎉 Happy Birthday Divya sri 🎂</h1>
+    <h1>🎉 Happy Birthday Divya Sri 🎂</h1>
     <h2>Wishing you endless smiles, love & magic ✨</h2>
 
     <div class="photo-frame">
@@ -200,70 +182,67 @@
       May this year bring you more adventures, laughter, and love! 🌸  
       Keep shining, Divya 🌟
     </p>
-
- 
+  </div>
 
   <audio autoplay loop>
     <source src="https://cdn.pixabay.com/download/audio/2023/03/08/audio_0e2b3ab182.mp3?filename=birthday-song-145251.mp3" type="audio/mp3">
   </audio>
 
-<script>
-  // 🎈 Balloon spawner (continuous)
-  function createBalloon() {
-    const balloon = document.createElement('div');
-    balloon.classList.add('balloon');
-    balloon.style.left = Math.random() * 100 + 'vw';
-    balloon.style.animationDuration = 8 + Math.random() * 4 + 's';
-    document.body.appendChild(balloon);
-    setTimeout(() => balloon.remove(), 12000);
-  }
-  setInterval(createBalloon, 800);
+  <script>
+    // 🎈 Slower balloon spawner
+    function createBalloon() {
+      if (document.querySelectorAll('.balloon').length > 10) return;
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.animationDuration = 10 + Math.random() * 5 + 's';
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 15000);
+    }
+    setInterval(createBalloon, 1500);
 
-  // 🌸 Floating emojis (run once)
-  const emojis = ['🎂', '💖', '🎉', '🌸', '✨', '💫', '🦋'];
-  function spawnEmojisOnce() {
-    const emojiCount = 25; // total emojis to appear once
-    for (let i = 0; i < emojiCount; i++) {
+    // 🌸 Fewer floating emojis for performance
+    const emojis = ['🎂', '💖', '🎉', '🌸', '✨', '💫', '🦋'];
+    function spawnEmoji() {
+      if (document.querySelectorAll('.emoji').length > 12) return;
       const emoji = document.createElement('div');
       emoji.classList.add('emoji');
       emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       emoji.style.left = Math.random() * 100 + 'vw';
-      emoji.style.animationDuration = 5 + Math.random() * 4 + 's';
+      emoji.style.animationDuration = 8 + Math.random() * 4 + 's';
       document.body.appendChild(emoji);
-      setTimeout(() => emoji.remove(), 8000);
+      setTimeout(() => emoji.remove(), 10000);
     }
-  }
-  window.addEventListener('load', spawnEmojisOnce);
+    setInterval(spawnEmoji, 1500);
 
-  // 🎆 Confetti burst on load
-  document.addEventListener('DOMContentLoaded', () => {
-    const duration = 4000;
-    const end = Date.now() + duration;
+    // 🎆 Confetti burst
+    document.addEventListener('DOMContentLoaded', () => {
+      const duration = 2500;
+      const end = Date.now() + duration;
 
-    (function frame() {
-      confetti({
-        particleCount: 6,
-        startVelocity: 35,
-        spread: 360,
-        origin: { x: Math.random(), y: Math.random() - 0.2 },
-        colors: ['#ff9a9e', '#fad0c4', '#fcb69f', '#ffe0ac']
-      });
-      if (Date.now() < end) requestAnimationFrame(frame);
-    })();
-  });
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          startVelocity: 30,
+          spread: 360,
+          origin: { x: Math.random(), y: Math.random() - 0.2 },
+          colors: ['#ff9a9e', '#fad0c4', '#fcb69f', '#ffe0ac']
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    });
 
-  // 🪩 3D Tilt effect
-  const card = document.getElementById("tilt-card");
-  card.addEventListener("mousemove", (e) => {
-    const { left, top, width, height } = card.getBoundingClientRect();
-    const x = e.clientX - left;
-    const y = e.clientY - top;
-    const rotateX = ((y / height) - 0.5) * 15;
-    const rotateY = ((x / width) - 0.5) * -15;
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  });
-  card.addEventListener("mouseleave", () => card.style.transform = "rotateX(0) rotateY(0)");
-</script>
-
+    // 🪩 3D Tilt effect (optimized)
+    const card = document.getElementById("tilt-card");
+    card.addEventListener("mousemove", (e) => {
+      const { left, top, width, height } = card.getBoundingClientRect();
+      const x = e.clientX - left;
+      const y = e.clientY - top;
+      const rotateX = ((y / height) - 0.5) * 10;
+      const rotateY = ((x / width) - 0.5) * -10;
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+    card.addEventListener("mouseleave", () => card.style.transform = "rotateX(0) rotateY(0)");
+  </script>
 </body>
 </html>
