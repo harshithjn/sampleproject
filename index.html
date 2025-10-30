@@ -187,7 +187,7 @@
   <div class="aura"></div>
 
   <div class="card" id="tilt-card">
-    <h1>🎉 Happy Birthday Divya 🎂</h1>
+    <h1>🎉 Happy Birthday Divya sri 🎂</h1>
     <h2>Wishing you endless smiles, love & magic ✨</h2>
 
     <div class="photo-frame">
@@ -201,31 +201,29 @@
       Keep shining, Divya 🌟
     </p>
 
-    <div class="footer">
-      Made with ❤️ by your friends | 
-      <a href="https://www.divyas18thbirthday.com" target="_blank">divyas18thbirthday.com</a>
-    </div>
-  </div>
+ 
 
   <audio autoplay loop>
     <source src="https://cdn.pixabay.com/download/audio/2023/03/08/audio_0e2b3ab182.mp3?filename=birthday-song-145251.mp3" type="audio/mp3">
   </audio>
 
-  <script>
-    // 🎈 Balloon spawner
-    function createBalloon() {
-      const balloon = document.createElement('div');
-      balloon.classList.add('balloon');
-      balloon.style.left = Math.random() * 100 + 'vw';
-      balloon.style.animationDuration = 8 + Math.random() * 4 + 's';
-      document.body.appendChild(balloon);
-      setTimeout(() => balloon.remove(), 12000);
-    }
-    setInterval(createBalloon, 800);
+<script>
+  // 🎈 Balloon spawner (continuous)
+  function createBalloon() {
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    balloon.style.left = Math.random() * 100 + 'vw';
+    balloon.style.animationDuration = 8 + Math.random() * 4 + 's';
+    document.body.appendChild(balloon);
+    setTimeout(() => balloon.remove(), 12000);
+  }
+  setInterval(createBalloon, 800);
 
-    // 🌸 Floating emojis
-    const emojis = ['🎂', '💖', '🎉', '🌸', '✨', '💫', '🦋'];
-    function spawnEmoji() {
+  // 🌸 Floating emojis (run once)
+  const emojis = ['🎂', '💖', '🎉', '🌸', '✨', '💫', '🦋'];
+  function spawnEmojisOnce() {
+    const emojiCount = 25; // total emojis to appear once
+    for (let i = 0; i < emojiCount; i++) {
       const emoji = document.createElement('div');
       emoji.classList.add('emoji');
       emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -234,36 +232,38 @@
       document.body.appendChild(emoji);
       setTimeout(() => emoji.remove(), 8000);
     }
-    setInterval(spawnEmoji, 1000);
+  }
+  window.addEventListener('load', spawnEmojisOnce);
 
-    // 🎆 Confetti burst
-    document.addEventListener('DOMContentLoaded', () => {
-      const duration = 4000;
-      const end = Date.now() + duration;
+  // 🎆 Confetti burst on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const duration = 4000;
+    const end = Date.now() + duration;
 
-      (function frame() {
-        confetti({
-          particleCount: 6,
-          startVelocity: 35,
-          spread: 360,
-          origin: { x: Math.random(), y: Math.random() - 0.2 },
-          colors: ['#ff9a9e', '#fad0c4', '#fcb69f', '#ffe0ac']
-        });
-        if (Date.now() < end) requestAnimationFrame(frame);
-      })();
-    });
+    (function frame() {
+      confetti({
+        particleCount: 6,
+        startVelocity: 35,
+        spread: 360,
+        origin: { x: Math.random(), y: Math.random() - 0.2 },
+        colors: ['#ff9a9e', '#fad0c4', '#fcb69f', '#ffe0ac']
+      });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  });
 
-    // 🪩 3D Tilt effect
-    const card = document.getElementById("tilt-card");
-    card.addEventListener("mousemove", (e) => {
-      const { left, top, width, height } = card.getBoundingClientRect();
-      const x = e.clientX - left;
-      const y = e.clientY - top;
-      const rotateX = ((y / height) - 0.5) * 15;
-      const rotateY = ((x / width) - 0.5) * -15;
-      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-    card.addEventListener("mouseleave", () => card.style.transform = "rotateX(0) rotateY(0)");
-  </script>
+  // 🪩 3D Tilt effect
+  const card = document.getElementById("tilt-card");
+  card.addEventListener("mousemove", (e) => {
+    const { left, top, width, height } = card.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+    const rotateX = ((y / height) - 0.5) * 15;
+    const rotateY = ((x / width) - 0.5) * -15;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  card.addEventListener("mouseleave", () => card.style.transform = "rotateX(0) rotateY(0)");
+</script>
+
 </body>
 </html>
